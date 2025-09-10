@@ -2,6 +2,7 @@ const btn = document.querySelector('.add-btn');
 const list = document.querySelector('#list-container');
 const box = document.querySelector('#input-box');
 
+
 btn.addEventListener('click', function(){
     if(box.value === '')
     {
@@ -12,6 +13,7 @@ btn.addEventListener('click', function(){
     const newItem = document.createElement('li');
     newItem.innerHTML = `${box.value} <span class="delete-btn">X</span>`;
     list.prepend(newItem); // THE PREPEND METHOD ADDS ANY NEW ELEMENT AT THE TOP WHEREAS APPENDCHILD ADDS AT THE BOTTOM
+    saveData(); // SAVE WHENEVER NEW ITEM IS ADDED
     box.value = '';
 })
 
@@ -25,6 +27,8 @@ list.addEventListener('click', function(e){
     // ADDS OR REMOVES THE CHECK ICON --> BEST METHOD
     else
         e.target.classList.toggle('checked');   
+
+    saveData(); // SAVE WHENEVER SOMETHING CHANGES
 
     // SAME WORK
     // if(e.target.id === 'checked')
@@ -47,5 +51,15 @@ list.addEventListener('click', function(e){
     // }
 })
 
+function saveData() {
+    localStorage.setItem("todos", list.innerHTML);
+}
+
+function loadData() {
+   list.innerHTML = localStorage.getItem("todos") || "";
+}
+
+
+loadData();
 
 
