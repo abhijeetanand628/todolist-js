@@ -52,14 +52,16 @@ list.addEventListener('click', function(e){
 })
 
 function saveData() {
+    // STORE THE ENTIRE LIST'S HTML
     localStorage.setItem("todos", list.innerHTML);
 }
 
 function loadData() {
-   list.innerHTML = localStorage.getItem("todos") || "";
+    // RESTORE LIST ITEMS FROM localStorage
+    list.innerHTML = localStorage.getItem("todos") || "";
 }
 
-
+// CALL loadData ONCE WHEN PAGE LOADS   
 loadData();
 
 
