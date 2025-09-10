@@ -2,6 +2,8 @@ const btn = document.querySelector('.add-btn');
 const list = document.querySelector('#list-container');
 const box = document.querySelector('#input-box');
 
+let draggedItem = null;
+
 
 btn.addEventListener('click', function(){
     if(box.value === '')
@@ -12,9 +14,32 @@ btn.addEventListener('click', function(){
     // CREATING A NEW LIST AND ADDING THE NEW ITEMS WHEN WE CLICK ON THE ADD BTN
     const newItem = document.createElement('li');
     newItem.innerHTML = `${box.value} <span class="delete-btn">X</span>`;
+    newItem.draggable = true; // MADE IT DRAGGABLE
     list.prepend(newItem); // THE PREPEND METHOD ADDS ANY NEW ELEMENT AT THE TOP WHEREAS APPENDCHILD ADDS AT THE BOTTOM
     saveData(); // SAVE WHENEVER NEW ITEM IS ADDED
     box.value = '';
+
+    newItem.addEventListener('dragstart', e => {
+    draggedItem = newItem;
+    });
+
+    newItem.addEventListener('dragover', e => {
+        e.preventDefault()
+    })
+
+    newItem.addEventListener('drop', e => {
+    if (draggedItem === newItem) return;
+
+    const children = Array.from(list.children);
+    if (children.indexOf(draggedItem) < children.indexOf(newItem)) {
+        // dragged item is above the target → move after
+        list.insertBefore(draggedItem, newItem.nextSibling);
+    } else {
+        // dragged item is below the target → move before
+        list.insertBefore(draggedItem, newItem);
+    }
+    saveData();
+    });
 })
 
 
@@ -64,4 +89,21 @@ function loadData() {
 // CALL loadData ONCE WHEN PAGE LOADS   
 loadData();
 
+// AFTER LOADING MAKE EXISTING TASKS DRAGGABLE
+Array.from(list.children).forEach(li => {
+    li.draggable = true;
+    li.addEventListener('dragstart', e => draggedItem = li);
+    li.addEventListener('dragover', e => e.preventDefault());
+    li.addEventListener('drop', e => {
+        if (draggedItem === li) return;
+
+        const children = Array.from(list.children);
+        if (children.indexOf(draggedItem) < children.indexOf(li)) {
+            list.insertBefore(draggedItem, li.nextSibling);
+        } else {
+            list.insertBefore(draggedItem, li);
+        }
+        saveData();
+    });
+});
 
