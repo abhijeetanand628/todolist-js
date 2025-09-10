@@ -11,7 +11,7 @@ btn.addEventListener('click', function(){
     // CREATING A NEW LIST AND ADDING THE NEW ITEMS WHEN WE CLICK ON THE ADD BTN
     const newItem = document.createElement('li');
     newItem.innerHTML = `${box.value} <span class="delete-btn">X</span>`;
-    list.prepend(newItem); // THE PREPEND METHOD ADDS ANY NEW ELEMENT AT THE TOP
+    list.prepend(newItem); // THE PREPEND METHOD ADDS ANY NEW ELEMENT AT THE TOP WHEREAS APPENDCHILD ADDS AT THE BOTTOM
     box.value = '';
 })
 
@@ -22,7 +22,7 @@ list.addEventListener('click', function(e){
         // console.log(e.target.tagName);
         e.target.parentElement.remove();
 
-    // ADDS OR REMOVES THE CHECK ICON -- BEST METHOD
+    // ADDS OR REMOVES THE CHECK ICON --> BEST METHOD
     else
         e.target.classList.toggle('checked');   
 
