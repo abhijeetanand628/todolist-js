@@ -4,7 +4,6 @@ const box = document.querySelector('#input-box');
 
 let draggedItem = null;
 
-
 btn.addEventListener('click', function(){
     if(box.value === '')
     {
@@ -20,7 +19,7 @@ btn.addEventListener('click', function(){
     box.value = '';
 
     newItem.addEventListener('dragstart', e => {
-    draggedItem = newItem;
+        draggedItem = newItem;
     });
 
     newItem.addEventListener('dragover', e => {
@@ -32,10 +31,10 @@ btn.addEventListener('click', function(){
 
     const children = Array.from(list.children);
     if (children.indexOf(draggedItem) < children.indexOf(newItem)) {
-        // dragged item is above the target → move after
+        // dragged item is above the target -> move after
         list.insertBefore(draggedItem, newItem.nextSibling);
     } else {
-        // dragged item is below the target → move before
+        // dragged item is below the target -> move before
         list.insertBefore(draggedItem, newItem);
     }
     saveData();
@@ -45,7 +44,7 @@ btn.addEventListener('click', function(){
 
 list.addEventListener('click', function(e){
     // DELETES A LIST ITEM
-    if(e.target.tagName === 'SPAN' && e.target.parentElement.classList.contains('checked'))
+    if(e.target.tagName === 'SPAN')
         // console.log(e.target.tagName);
         e.target.parentElement.remove();
 
